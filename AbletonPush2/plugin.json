@@ -1,0 +1,22 @@
+{
+  "slug": "AbletonPush2",
+  "name": "AbletonPush2",
+  "version": "1.0.0",
+  "license": "proprietary",
+  "brand": "AbletonPush2",
+  "author": "ferluht",
+  "authorEmail": "ilya.i.belikov@gmail.com",
+  "authorUrl": "",
+  "pluginUrl": "",
+  "manualUrl": "",
+  "sourceUrl": "",
+  "donateUrl": "",
+  "modules": [
+    {
+      "slug": "AbletonPush2",
+      "name": "AbletonPush2",
+      "description": "",
+      "tags": []
+    }
+  ]
+}
