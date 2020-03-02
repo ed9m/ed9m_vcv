@@ -100,16 +100,13 @@ public:
 			if (paramHandle->moduleId < 0) continue;
 			ModuleWidget* mw = APP->scene->rack->getModule(paramHandle->moduleId);
 			if (!mw) continue;
-			// Get the Module from the ModuleWidget instead of the ParamHandle.
-			// I think this is more elegant since this method is called in the app world instead of the engine world.
+			
 			Module* m = mw->module;
 			if (!m) continue;
 			int paramId = paramHandle->paramId;
 			if (paramId >= (int) m->params.size()) continue;
 			ParamQuantity* paramQuantity = m->paramQuantities[paramId];
 			std::string s;
-			// s += mw->model->name;
-			// s += " ";
 			s += paramQuantity->label;
 
 			nvgBeginPath(vg);
@@ -151,13 +148,10 @@ public:
 	}
 
 	Push2Display() {
-		// font = APP->window->loadFont(asset::plugin(pluginInstance, "res/Roboto-Regular.ttf"));
-		// initNanoVG();
 		display_connected = false;
 		device_handle = NULL;
 		len = nullptr;
 		image = (unsigned char*)malloc(960*160*4);
-    	// printf("Open push\n");
 	}
 
 	~Push2Display() {
@@ -183,8 +177,6 @@ public:
 
 		NVGcontext* vg = APP->window->vg;
 
-	    // nvgFontFaceId(vg, font->handle);
-
 
 	    if (display_connected) {
 
@@ -194,12 +186,6 @@ public:
 		    glClear(GL_COLOR_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
 
 	    	nvgBeginFrame(vg, 960,  160, 1);
-
-		    // nvgBeginPath(vg);
-		    // nvgCircle(vg, 500, 100, 10);
-		    // nvgFillColor(vg, nvgRGBA(255,50,50,255));
-		    // nvgFill(vg);
-		    // nvgClosePath(vg);
 
 		    draw(vg);
 

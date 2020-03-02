@@ -15,8 +15,6 @@ struct AbletonPush2 : Module {
 
 	Push2Display * display;
 
-	// state variables
-
 	bool shiftMode = false;
 
 	int focusNote = BASE_NOTE;
@@ -43,19 +41,6 @@ public:
 		GATEOUT_OUTPUT,
 		CVOUT_OUTPUT,
 		VELOUT_OUTPUT,
-
-		G1G_OUTPUT,
-		CV1G_OUTPUT,
-		V1G_OUTPUT,
-		G2G_OUTPUT,
-		CV2G_OUTPUT,
-		V2G_OUTPUT,
-		G3G_OUTPUT,
-		CV3G_OUTPUT,
-		V3G_OUTPUT,
-		G4G_OUTPUT,
-		CV4G_OUTPUT,
-		V4G_OUTPUT,
 
 		GR_OUTPUT,
 		GRT_OUTPUT,
@@ -142,12 +127,8 @@ public:
 				APP->engine->addParamHandle(paramHandles[g][id]);
 			}
 		}
-		// for (int i = 0; i < MAX_CHANNELS; i++) {
-		// 	valueFilters[i].setTau(1 / 30.f);
-		// }
 
 		onReset();
-		// connectPush();
 	}
 
 	~AbletonPush2() {
@@ -155,12 +136,6 @@ public:
 			keyboard[i]->lightOff();
 			knobs[i]->lightOff();
 		}
-
-		// for (int g = 0; g < NUM_GROUPS; g++) {
-		// 	for (int id = 0; id < MAX_CHANNELS; id++) {
-		// 		APP->engine->removeParamHandle(paramHandles[focusGroup][id]);
-		// 	}
-		// }
 	}
 
 	void onReset() override {
@@ -192,19 +167,10 @@ public:
 		if (shiftMode) knobs[SHIFT]->lightOn(127);
 		else knobs[SHIFT]->lightOff();
 
-		// PushKnob KTAPTEMPO = PushKnob(0xB, TAP_TEMPO);
-		// KTAPTEMPO.lightOn(&midiOutput, 127);
-
-		// sendMidi(0xB, TAP_TEMPO, 127);
-		// sendMidi(0xB, METRONOME, 127);
-		// sendMidi(0xB, DELETE, 127);
-		// sendMidi(0xB, UNDO, 127);
-		// sendMidi(0xB, MUTE, 127);
-		// sendMidi(0xB, SOLO, 127);
-		// sendMidi(0xB, STOP_CLIP, 127);
-		// sendMidi(0xB, MASTER, 127);
 		if(isplaying) sendMidi(0xB, PLAY, 126);
 		else sendMidi(0xB, PLAY, 125);
+
+		sendMidi(0xB, PLAY, 125);
 	}
 
 	void processNote(midi::Message msg) {
@@ -474,7 +440,6 @@ public:
 				json_object_set_new(mapJ, "cc", json_integer(ccs[g][id]));
 				json_object_set_new(mapJ, "moduleId", json_integer(paramHandles[g][id]->moduleId));
 				json_object_set_new(mapJ, "paramId", json_integer(paramHandles[g][id]->paramId));
-				// json_object_set_new(mapJ, "value", json_integer(values[g][id]));
 				json_array_append_new(mapsJ, mapJ);
 			}
 			char name[20];
@@ -510,13 +475,11 @@ public:
 					json_t* ccJ = json_object_get(mapJ, "cc");
 					json_t* moduleIdJ = json_object_get(mapJ, "moduleId");
 					json_t* paramIdJ = json_object_get(mapJ, "paramId");
-					// json_t* valueJ = json_object_get(mapJ, "value");
 					if (!(ccJ && moduleIdJ && paramIdJ))
 						continue;
 					if (mapIndex >= MAX_CHANNELS)
 						continue;
 					ccs[g][mapIndex] = json_integer_value(ccJ);
-					// values[g][mapIndex] = json_integer_value(valueJ);
 
 					ParamHandle* oldParamHandle = APP->engine->getParamHandle(json_integer_value(moduleIdJ), json_integer_value(paramIdJ));
 					if (oldParamHandle) {
@@ -548,9 +511,6 @@ public:
 					continue;
 				if (!paramQuantity->isBounded())
 					continue;
-				// Check if CC has been set by the MIDI device
-				// if (values[g][cc] < 0)
-				// 	continue;
 				values[g][cc] = paramQuantity->getScaledValue() * 127.f;
 			}
 		}
@@ -753,47 +713,22 @@ struct AbletonPush2Widget : ModuleWidget {
 		setModule(module);
 		setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/AbletonPush2.svg")));
 
-		// initNanoVG()
-
 		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, 0)));
 		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
 		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(5., 70.)), module, AbletonPush2::GATEOUT_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(5., 85.)), module, AbletonPush2::CVOUT_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(5., 100.)), module, AbletonPush2::VELOUT_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(20., 77.)), module, AbletonPush2::GATEOUT_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(20., 87.)), module, AbletonPush2::CVOUT_OUTPUT));
 
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(15., 70)), module, AbletonPush2::G1G_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(15., 85)), module, AbletonPush2::CV1G_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(15., 100)), module, AbletonPush2::V1G_OUTPUT));
-
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(25., 70)), module, AbletonPush2::G2G_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(25., 85)), module, AbletonPush2::CV2G_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(25., 100)), module, AbletonPush2::V2G_OUTPUT));
-
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(35., 70)), module, AbletonPush2::G3G_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(35., 85)), module, AbletonPush2::CV3G_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(35., 100)), module, AbletonPush2::V3G_OUTPUT));
-
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(45., 70)), module, AbletonPush2::G4G_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(45., 85)), module, AbletonPush2::CV4G_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(45., 100)), module, AbletonPush2::V4G_OUTPUT));
-
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(5., 115)), module, AbletonPush2::GR_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(15., 115)), module, AbletonPush2::GRT_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(20., 97)), module, AbletonPush2::GRT_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(20., 107)), module, AbletonPush2::GR_OUTPUT));
 
 		Push2Display *push = new Push2Display();
 		push->box.pos = Vec(-959, -159);
 		push->box.size = Vec(960, 160);
 		addChild(push);
 		this->push2 = push;
-
-		// SvgButton *connectButton = new SvgButton();
-		// connectButton->box.pos = Vec(50, 15);
-		// connectButton->box.size = Vec(10, 10);
-		// addChild(connectButton);
-		// this->connectButton = connectButton;
 
 		if (module) module->attachDisplay(push);
 
