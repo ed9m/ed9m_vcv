@@ -12,6 +12,7 @@ Video overview
 * CV output
 * Pad grouping and color mapping
 * Mapping VCV parameters to Push encoders
+* Push display feedback
 
 #### Installation
 * ```git clone https://github.com/ed9m/ed9m_vcv```
