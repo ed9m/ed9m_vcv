@@ -169,8 +169,6 @@ public:
 
 		if(isplaying) sendMidi(0xB, PLAY, 126);
 		else sendMidi(0xB, PLAY, 125);
-
-		sendMidi(0xB, PLAY, 125);
 	}
 
 	void processNote(midi::Message msg) {
@@ -718,9 +716,8 @@ struct AbletonPush2Widget : ModuleWidget {
 		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(20., 77.)), module, AbletonPush2::GATEOUT_OUTPUT));
-		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(20., 87.)), module, AbletonPush2::CVOUT_OUTPUT));
-
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(20., 77.)), module, AbletonPush2::CVOUT_OUTPUT));
+		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(20., 87.)), module, AbletonPush2::GATEOUT_OUTPUT));
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(20., 97)), module, AbletonPush2::GRT_OUTPUT));
 		addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(20., 107)), module, AbletonPush2::GR_OUTPUT));
 
