@@ -1,0 +1,22 @@
+{
+  "slug": "ED9M",
+  "name": "ED9M Modular",
+  "version": "0.1.0",
+  "license": "MIT License",
+  "brand": "ED9M",
+  "author": "ferluht",
+  "authorEmail": "ilya.i.belikov@gmail.com",
+  "authorUrl": "",
+  "pluginUrl": "",
+  "manualUrl": "",
+  "sourceUrl": "https://github.com/ed9m/ed9m_vcv",
+  "donateUrl": "",
+  "modules": [
+    {
+      "slug": "AbletonPush2",
+      "name": "AbletonPush2",
+      "description": "Control VCV with Ableton Push 2",
+      "tags": ["midi", "controller", "pattern", "mapping"]
+    }
+  ]
+}
