@@ -13,3 +13,4 @@ Video overview
 * ```cd ed9m_vcv```
 * ```RACK_DIR=<path to Rack SDK> make install```
 
+[Usage example](https://www.youtube.com/watch?v=Y2RphGohREE)
