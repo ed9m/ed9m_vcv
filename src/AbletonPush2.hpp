@@ -1,10 +1,6 @@
 #pragma once
 
-#ifdef __linux__
 #include <libusb-1.0/libusb.h>
-#else
-#include "libusb.h"
-#endif
 
 #define ABLETON_VENDOR_ID 0x2982
 #define PUSH2_PRODUCT_ID  0x1967
