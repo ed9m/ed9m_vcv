@@ -8,6 +8,11 @@ A module for controlling VCV Rack via Ableton Push 2
 
 Video overview
 
+#### Features
+* CV output
+* Pad grouping and color mapping
+* Mapping VCV parameters to Push encoders
+
 #### Installation
 * ```git clone https://github.com/ed9m/ed9m_vcv```
 * ```cd ed9m_vcv```
