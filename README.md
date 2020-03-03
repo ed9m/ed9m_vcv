@@ -9,7 +9,7 @@ A module for controlling VCV Rack via Ableton Push 2
 Video overview
 
 #### Features
-* CV output
+* CV, GATE, PLAY button outputs
 * Pad grouping and color mapping
 * Mapping VCV parameters to Push encoders
 * Push display feedback
