@@ -20,3 +20,5 @@ Video overview
 * ```RACK_DIR=<path to Rack SDK> make install```
 
 [Usage example](https://www.youtube.com/watch?v=Y2RphGohREE)
+
+Tested on Ubuntu 18.04
